@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { useAuth } from "../Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Box, Typography, Container, Link } from "@mui/material";
-import { login } from "../../api/userApi"; 
+import { login } from "../../api/userApi"; // Mock API
 import { toast } from "react-toastify";
 
 const LoginPage = () => {
@@ -12,26 +12,26 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (values) => {
-    if (values.email === "admin" && values.password === "admin") {
-   
-      authenticate("admin-token"); 
+    try {
+      const response = await login(values);
+      authenticate(response.data.token); // Save token and authenticate user
       toast.success("Login successful!");
       navigate("/users");
-      return;
-    }else{
+    } catch (error) {
       toast.error("Invalid login credentials.");
     }
-    // try {
-    //   const response = await login(values);
-    //   authenticate(response.data.token); // Save token and authenticate user
-    //   toast.success("Login successful!");
-    //   navigate("/users");
-    // } catch (error) {
-    //   toast.error("Invalid login credentials.");
-    // }
   };
 
   return (
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100%',
+      }}
+    >
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
@@ -89,6 +89,7 @@ const LoginPage = () => {
           )}
         </Formik>
 
+        {/* Forgot Password and Sign Up Links */}
         <Box sx={{ textAlign: "center", mt: 2 }}>
           <Typography variant="body2">
             Forgot your password?{" "}
@@ -113,6 +114,7 @@ const LoginPage = () => {
         </Box>
       </Box>
     </Container>
+    </Box>
   );
 };
 

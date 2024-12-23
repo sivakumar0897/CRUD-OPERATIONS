@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'; // Import Provider
 import theme from '../src/components/styles/theme';
 import store from './redux/store'; // Import Redux store
 import "../src/components/styles/global.css"
+import "../src/index.css"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
